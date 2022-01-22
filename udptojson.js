@@ -4,7 +4,7 @@ const JSONSocket = require('udp-json');
 
 // Listener socket
 const socket = dgram.createSocket('udp4');
-socket.bind(20777, '192.168.0.16');
+socket.bind(20777, '127.0.0.1');
 const jsonSocket = new JSONSocket(socket)
 jsonSocket.on('message-complete', (msg, rinfo) => {
     console.log('Message received', rinfo, msg);

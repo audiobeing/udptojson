@@ -16,7 +16,12 @@ server.on('error', (err) => {
 jsonSocket.on('message-complete', (msg, rinfo) => {
     console.log('Message received', rinfo, msg);
 })
-
+jsonSocket.on('message-error', (e) => {
+    console.log('Error', e);
+});
+jsonSocket.on('message-timeout', (e) => {
+    console.log('Error', e);
+});
 // server.on('message', (msg, rinfo) => {
 //   console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
 // });

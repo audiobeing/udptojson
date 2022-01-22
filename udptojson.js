@@ -1,14 +1,35 @@
-// import dgram from 'dgram';
-const dgram = require("dgram")
-const JSONSocket = require('udp-json');
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
 
-// Listener socket
-const socket = dgram.createSocket('udp4');
-socket.bind(20777, '127.0.0.1');
-const jsonSocket = new JSONSocket(socket)
-jsonSocket.on('message-complete', (msg, rinfo) => {
-    console.log('Message received', rinfo, msg);
-})
+server.on('error', (err) => {
+  console.log(`server error:\n${err.stack}`);
+  server.close();
+});
+
+server.on('message', (msg, rinfo) => {
+  console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+
+server.on('listening', () => {
+  const address = server.address();
+  console.log(`server listening ${address.address}:${address.port}`);
+});
+
+server.bind(20777);
+
+
+
+// import dgram from 'dgram';
+// const dgram = require("dgram")
+// const JSONSocket = require('udp-json');
+
+// // Listener socket
+// const socket = dgram.createSocket('udp4');
+// socket.bind(20777, '127.0.0.1');
+// const jsonSocket = new JSONSocket(socket)
+// jsonSocket.on('message-complete', (msg, rinfo) => {
+//     console.log('Message received', rinfo, msg);
+// })
 
 // Sender socket
 // const socket2 = dgram.createSocket('udp4');

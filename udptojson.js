@@ -4,9 +4,9 @@ const JSONSocket = require('udp-json');
 
 
 // Listener socket
-const socket = dgram.createSocket('udp4');
+// const socket = dgram.createSocket('udp4');
 // socket.bind(20777);
-const jsonSocket = new JSONSocket(socket)
+const jsonSocket = new JSONSocket(server)
 
 
 server.on('error', (err) => {

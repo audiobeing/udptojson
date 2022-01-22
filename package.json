@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "dgram": "^1.0.1",
+    "udp-json": "^1.2.1"
+  }
+}

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@racehub-io/f1-telemetry-client": "^0.2.6",
     "dgram": "^1.0.1",
     "udp-json": "^1.2.1"
   }

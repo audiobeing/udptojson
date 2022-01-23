@@ -1,10 +1,8 @@
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 const JSONSocket = require('udp-json');
-const F1 = require('@racehub-io/f1-telemetry-client')
-
-const PACKETS = F1.constants; 
-const F1TelemetryClient = F1.F1TelemetryClient; 
+const { F1TelemetryClient, constants } = require('@racehub-io/f1-telemetry-client');
+const { PACKETS } = constants;
 
 const client = new F1TelemetryClient({ port: 20777 });
 client.on(PACKETS.event, console.log);

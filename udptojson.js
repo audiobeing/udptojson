@@ -85,10 +85,8 @@ async function connectDb(){
     });
 
 }
-async function saveData(o){
 
-}
-async function saveDatum(o){
+async function saveData(o){
     const d = new Date();
     let utctime = d.getTime();
     var datum = new Data({

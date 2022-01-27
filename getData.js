@@ -8,7 +8,11 @@ findData();
 
 async function findData(){
     const docs = await Data.find({ "data.m_header.m_packetId": 4 });
-    console.log(docs)
+    docs.forEach((v,i)=>{
+        console.log(v.data.m_participants ); 
+        })
+
+    // console.log(JSON.stringify(docs.data.m_participants)); 
 }
 async function connectDb(){
     db.mongoose

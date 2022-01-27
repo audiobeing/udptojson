@@ -10,18 +10,56 @@ const Data = db.data;
 require("dotenv").config({path:".env"}); 
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
-client.on(PACKETS.event, console.log);
-// client.on(PACKETS.motion, console.log);
-// client.on(PACKETS.carSetups, console.log);
-// client.on(PACKETS.lapData, console.log);
-// client.on(PACKETS.session, console.log);
-// client.on(PACKETS.participants, console.log);
-// client.on(PACKETS.carTelemetry, console.log);
-// client.on(PACKETS.carStatus, console.log);
-client.on(PACKETS.finalClassification, console.log);
-// client.on(PACKETS.lobbyInfo, console.log);
-// client.on(PACKETS.carDamage, console.log);
-// client.on(PACKETS.sessionHistory, console.log);
+
+client.on(PACKETS.event, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+
+client.on(PACKETS.motion, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carSetups, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.lapData, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.session, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.participants, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carTelemetry, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carStatus, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.finalClassification, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.lobbyInfo, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carDamage, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.sessionHistory, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
 
 // to start listening:
 client.start();
@@ -39,33 +77,35 @@ async function connectDb(){
         console.log("Successfully connect to MongoDB.");
         // initiateCarnumbers()
         // setupBot(); 
-        const d = new Date();
-        let utctime = d.getTime();
-
-        var datum = new Data({
-            time: utctime, 
-            data: {
-                test: "testing",
-                testi: {a: {b: "k"}}
-            }
-        })
-        datum.save((err,datum)=>{
-            if (err) {
-            console.log(err); 
-            }
-            datum.save(err => {
-            if (err) {
-                console.log(err)
-            }
-            mess = "was added to db"
-            console.log("saved datum")
-            
-            });
-        })
+        
     })
     .catch(err => {
         console.error("Connection error", err);
         process.exit();
     });
 
+}
+async function saveData(o){
+
+}
+async function saveDatum(o){
+    const d = new Date();
+    let utctime = d.getTime();
+    var datum = new Data({
+        time: utctime, 
+        data: o
+    })
+    datum.save((err,datum)=>{
+        if (err) {
+        console.log(err); 
+        }
+        datum.save(err => {
+        if (err) {
+            console.log(err)
+        }
+        mess = "was added to db"
+        console.log("saved datum")
+        
+        });
+    })
 }

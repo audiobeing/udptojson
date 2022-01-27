@@ -16,6 +16,14 @@ client.on(PACKETS.event, async (d)=>{
     console.log(d); 
 });
 
+// toObject() {
+//     return JSON.parse(JSON.stringify(this, (key, value) =>
+//         typeof value === 'bigint'
+//             ? value.toString()
+//             : value // return everything else unchanged
+//     ));
+// }
+
 // client.on(PACKETS.motion, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 

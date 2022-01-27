@@ -12,16 +12,26 @@ connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 
 client.on(PACKETS.event, async (d)=>{
-    // saveData(d); 
-    console.log(d); 
+    var dd = JSON.parse(JSON.stringify(d,(key,value)=>{
+        if(typeof value === 'bigint'){
+            //console.log("yep")
+            return value.toString(); 
+            // console.log("yep")
+        }else{
+            //console.log("stringipoo---no")
+            return value
+        }
+    }))
+   saveData(dd) 
+   console.log(dd); 
 });
 
 // toObject() {
-//     return JSON.parse(JSON.stringify(this, (key, value) =>
-//         typeof value === 'bigint'
-//             ? value.toString()
-//             : value // return everything else unchanged
-//     ));
+ //    return JSON.parse(JSON.stringify(this, (key, value) =>
+   //      typeof value === 'bigint'
+     //        ? value.toString()
+       //      : value // return everything else unchanged
+    // ));
 // }
 
 // client.on(PACKETS.motion, async (d)=>{

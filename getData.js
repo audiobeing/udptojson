@@ -7,7 +7,7 @@ connectDb()
 findData(); 
 
 async function findData(){
-    const docs = await Data.find({ "m_header.m_packid": 4 });
+    const docs = await Data.find({ "data.m_header.m_packetId": 4 });
     console.log(docs)
 }
 async function connectDb(){

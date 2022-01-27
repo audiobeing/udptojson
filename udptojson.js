@@ -16,50 +16,50 @@ client.on(PACKETS.event, async (d)=>{
     console.log(d); 
 });
 
-client.on(PACKETS.motion, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carSetups, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.lapData, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.session, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.participants, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carTelemetry, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carStatus, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.finalClassification, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.lobbyInfo, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carDamage, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.sessionHistory, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.motion, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carSetups, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.lapData, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.session, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.participants, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carTelemetry, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carStatus, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.finalClassification, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.lobbyInfo, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carDamage, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.sessionHistory, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
 
 // to start listening:
 client.start();

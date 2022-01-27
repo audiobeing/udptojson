@@ -12,72 +12,55 @@ connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 
 client.on(PACKETS.event, async (d)=>{
-    var dd = JSON.parse(JSON.stringify(d,(key,value)=>{
-        if(typeof value === 'bigint'){
-            //console.log("yep")
-            return value.toString(); 
-            // console.log("yep")
-        }else{
-            //console.log("stringipoo---no")
-            return value
-        }
-    }))
-   saveData(dd) 
-   console.log(dd); 
+   saveData(d) 
+   console.log(dd)
 });
 
-// toObject() {
- //    return JSON.parse(JSON.stringify(this, (key, value) =>
-   //      typeof value === 'bigint'
-     //        ? value.toString()
-       //      : value // return everything else unchanged
-    // ));
-// }
 
-// client.on(PACKETS.motion, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.carSetups, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.lapData, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.session, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.participants, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.carTelemetry, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.carStatus, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.finalClassification, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.lobbyInfo, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.carDamage, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-// client.on(PACKETS.sessionHistory, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
+client.on(PACKETS.motion, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carSetups, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.lapData, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.session, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.participants, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carTelemetry, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carStatus, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.finalClassification, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.lobbyInfo, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.carDamage, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
+client.on(PACKETS.sessionHistory, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
 
 // to start listening:
 client.start();
@@ -105,6 +88,16 @@ async function connectDb(){
 }
 
 async function saveData(o){
+    var o = JSON.parse(JSON.stringify(o,(key,value)=>{
+        if(typeof value === 'bigint'){
+            //console.log("yep")
+            return value.toString(); 
+            // console.log("yep")
+        }else{
+            //console.log("stringipoo---no")
+            return value
+        }
+    }))
     const d = new Date();
     let utctime = d.getTime();
     var datum = new Data({

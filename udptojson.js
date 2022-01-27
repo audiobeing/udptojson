@@ -13,7 +13,7 @@ const client = new F1TelemetryClient({ port: 20777 });
 
 client.on(PACKETS.event, async (d)=>{
    saveData(d) 
-   console.log(dd)
+   console.log(d)
 });
 
 

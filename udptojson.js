@@ -12,7 +12,7 @@ connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 
 client.on(PACKETS.event, async (d)=>{
-    saveData(d); 
+    // saveData(d); 
     console.log(d); 
 });
 

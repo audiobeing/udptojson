@@ -11,56 +11,58 @@ require("dotenv").config({path:".env"});
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 
-client.on(PACKETS.event, async (d)=>{
-   saveData(d) 
-   console.log(d)
-});
-
-
-client.on(PACKETS.motion, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carSetups, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.event, async (d)=>{
+//    saveData(d) 
+//    console.log(d)
+// });
+// client.on(PACKETS.motion, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carSetups, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
 client.on(PACKETS.lapData, async (d)=>{
+    d.type = "lapData"
     saveData(d); 
     console.log(d); 
 });
-client.on(PACKETS.session, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.session, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
 client.on(PACKETS.participants, async (d)=>{
+    d.type = "participants"
     saveData(d); 
     console.log(d); 
 });
-client.on(PACKETS.carTelemetry, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.carStatus, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.carTelemetry, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.carStatus, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
 client.on(PACKETS.finalClassification, async (d)=>{
+    d.type = "finalClassification"; 
     saveData(d); 
     console.log(d); 
 });
 client.on(PACKETS.lobbyInfo, async (d)=>{
+    d.type = "lobbyInfo"
     saveData(d); 
     console.log(d); 
 });
-client.on(PACKETS.carDamage, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.sessionHistory, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.carDamage, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.sessionHistory, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
 
 // to start listening:
 client.start();

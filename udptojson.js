@@ -26,20 +26,20 @@ const client = new F1TelemetryClient({ port: 20777 });
 client.on(PACKETS, async (d)=>{
     d.session = "race"
 })
-client.on(PACKETS.lapData, async (d)=>{
-    d.type = "lapData"
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.session, async (d)=>{
-    saveData(d); 
-    console.log(d); 
-});
-client.on(PACKETS.participants, async (d)=>{
-    d.type = "participants"
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.lapData, async (d)=>{
+//     d.type = "lapData"
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.session, async (d)=>{
+//     saveData(d); 
+//     console.log(d); 
+// });
+// client.on(PACKETS.participants, async (d)=>{
+//     d.type = "participants"
+//     saveData(d); 
+//     console.log(d); 
+// });
 // client.on(PACKETS.carTelemetry, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
@@ -53,11 +53,11 @@ client.on(PACKETS.finalClassification, async (d)=>{
     saveData(d); 
     console.log(d); 
 });
-client.on(PACKETS.lobbyInfo, async (d)=>{
-    d.type = "lobbyInfo"
-    saveData(d); 
-    console.log(d); 
-});
+// client.on(PACKETS.lobbyInfo, async (d)=>{
+//     d.type = "lobbyInfo"
+//     saveData(d); 
+//     console.log(d); 
+// });
 // client.on(PACKETS.carDamage, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 

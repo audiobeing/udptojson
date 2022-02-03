@@ -7,19 +7,19 @@ connectDb()
 findData(); 
 
 async function findData(){
-    const docs = await Data.find({ "data.type": "participants" });
+    const docs = await Data.find({ "data.type": "lapData" });
     //  scrub throught the arrua for:
     //  if aicontrolled is equal to 1; printit
     //  else:  fuck it
-    var pruned = []; 
-    docs.forEach((v,i)=>{
-        var mess = v.data.m_participants
-        var result = mess.filter(fil)
-        pruned.push(result)
-        console.log(result); 
-        }); 
+    // var pruned = []; 
+    // docs.forEach((v,i)=>{
+    //     var mess = v.data.m_participants
+    //     var result = mess.filter(fil)
+    //     pruned.push(result)
+    //     console.log(result); 
+    //     }); 
 
-    storeData(pruned, __dirname+"/Participants.json"); 
+    storeData(docs, __dirname+"/LapData.json"); 
     db.mongoose.connection.close()
     // console.log(JSON.stringify(docs.data.m_participants)); 
 }

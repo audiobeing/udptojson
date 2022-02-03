@@ -24,7 +24,7 @@ const client = new F1TelemetryClient({ port: 20777 });
 //     console.log(d); 
 // });
 client.on(PACKETS, async (d)=>{
-    d.session = "practice"
+    d.session = "race"
 })
 client.on(PACKETS.lapData, async (d)=>{
     d.type = "lapData"

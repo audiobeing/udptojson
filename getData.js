@@ -34,7 +34,7 @@ function storeData(data, path){
 
 
 function fil(d){
-    if(d.m_aiControlled ==  1){
+    if(d.m_aiControlled ==  0){
         return d
     }
 }

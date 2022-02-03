@@ -31,10 +31,10 @@ client.on(PACKETS.lapData, async (d)=>{
     saveData(d); 
     console.log(d); 
 });
-// client.on(PACKETS.session, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
+client.on(PACKETS.session, async (d)=>{
+    saveData(d); 
+    console.log(d); 
+});
 client.on(PACKETS.participants, async (d)=>{
     d.type = "participants"
     saveData(d); 

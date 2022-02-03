@@ -50,8 +50,9 @@ client.on(PACKETS, async (d)=>{
 // });
 client.on(PACKETS.finalClassification, async (d)=>{
     d.type = "finalClassification"; 
-    saveData(d); 
     console.log(d); 
+    saveData(d); 
+    
 });
 // client.on(PACKETS.lobbyInfo, async (d)=>{
 //     d.type = "lobbyInfo"

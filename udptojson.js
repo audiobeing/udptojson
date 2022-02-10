@@ -10,7 +10,7 @@ const Data = db.data;
 require("dotenv").config({path:".env"}); 
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
-
+var session = "practice"
 // client.on(PACKETS.event, async (d)=>{
 //    saveData(d) 
 //    console.log(d)
@@ -23,9 +23,9 @@ const client = new F1TelemetryClient({ port: 20777 });
 //     saveData(d); 
 //     console.log(d); 
 // });
-client.on(PACKETS, async (d)=>{
-    d.session = "race"
-})
+// client.on(PACKETS, async (d)=>{
+//     d.session = "race"
+// })
 // client.on(PACKETS.lapData, async (d)=>{
 //     d.type = "lapData"
 //     saveData(d); 
@@ -35,11 +35,13 @@ client.on(PACKETS, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
 // });
-// client.on(PACKETS.participants, async (d)=>{
-//     d.type = "participants"
-//     saveData(d); 
-//     console.log(d); 
-// });
+client.on(PACKETS.participants, async (d)=>{
+    d.gearSession = session; 
+    d.type = "participants"
+    saveData(d); 
+    console.log(d); 
+});
+/// 
 // client.on(PACKETS.carTelemetry, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
@@ -49,6 +51,7 @@ client.on(PACKETS, async (d)=>{
 //     console.log(d); 
 // });
 client.on(PACKETS.finalClassification, async (d)=>{
+    d.gearSession = session; 
     d.type = "finalClassification"; 
     console.log(d); 
     saveData(d); 

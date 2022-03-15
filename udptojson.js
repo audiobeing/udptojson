@@ -52,10 +52,13 @@ client.on(PACKETS.participants, async (d)=>{
     d.type = "participants"
     if(lightOutEvent==true){
         d.lightOutEvent = true; 
-        lightOutEvent = false; 
+        setTimeout(function(){
+            lightOutEvent = false; 
+        },12000)
+        saveData(d); 
         console.log("participants lights out event tagged")
     }
-    saveData(d); 
+   
     // console.log(d); 
 });
 /// 
@@ -115,6 +118,7 @@ async function connectDb(){
 }
 
 async function saveData(o){
+
     var o = JSON.parse(JSON.stringify(o,(key,value)=>{
         if(typeof value === 'bigint'){
             //console.log("yep")
@@ -140,7 +144,7 @@ async function saveData(o){
             console.log(err)
         }
         mess = "was added to db"
-        console.log("saved datum")
+        console.log(o.type + " saved datum")
         
         });
     })

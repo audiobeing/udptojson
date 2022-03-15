@@ -11,10 +11,21 @@ require("dotenv").config({path:".env"});
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 var session = "practice"
-// client.on(PACKETS.event, async (d)=>{
-//    saveData(d) 
-//    console.log(d)
-// });
+
+//// CAPTURE PARICIPANTS DATA PACKET ID 4 ONCE AFTER LIGHTS OUT EVENT()
+
+
+//// GET LIGHTS OUT EVENT HERE
+client.on(PACKETS.event, async (d)=>{
+    // m_eventStringCode
+    // “LGOT”
+    if(d.m_eventStringCode == "LGOT"){
+        d.raceEvent_lightsOut = true; 
+        console.log("lights out event tagged")
+    }
+   saveData(d) 
+   console.log(d)
+});
 // client.on(PACKETS.motion, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
@@ -50,6 +61,7 @@ client.on(PACKETS.participants, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
 // });
+
 client.on(PACKETS.finalClassification, async (d)=>{
     d.gearSession = session; 
     d.type = "finalClassification"; 

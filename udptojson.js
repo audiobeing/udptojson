@@ -19,13 +19,14 @@ var lightOutEvent = false;
 client.on(PACKETS.event, async (d)=>{
     // m_eventStringCode
     // “LGOT”
+    d.type = 'event'
     if(d.m_eventStringCode == "LGOT"){
         d.raceEvent_lightsOut = true; 
         lightOutEvent = true; 
         console.log("lights out event tagged")
     }
    saveData(d) 
-   console.log(d)
+//    console.log(d)
 });
 // client.on(PACKETS.motion, async (d)=>{
 //     saveData(d); 

@@ -52,7 +52,7 @@ client.on(PACKETS.participants, async (d)=>{
     d.gearSession = session; 
     d.type = "participants"
     if(lightsOutEvent==true){
-        // d.lightsOutEvent = true; 
+        d.lightsOutEvent = true; 
         setTimeout(function(){
             lightsOutEvent = false; 
             console.log("lightsOutEvent changed to false")

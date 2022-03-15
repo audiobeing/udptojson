@@ -48,7 +48,7 @@ async function findData(){
     date = Date.parse(date)
     // console.log(dateRef, date);
 // //HERE
-    var participants = await Data.findOne({$and: [{"data.type": "participants"}, {"time": {$gte : date}}]});
+    var participants = await Data.findOne({$and: [{"data.type": "participants"}, {"time": {$gte : date}}, {"data.lightsOutEvent": true}]});
     // console.log(participants.m_header)
     // storeData(finalClassification, __dirname+"/finalClassificationFormat.json"); 
     console.log("participants", new Date(participants.time))

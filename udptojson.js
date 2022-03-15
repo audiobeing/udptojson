@@ -11,7 +11,7 @@ require("dotenv").config({path:".env"});
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
 var session = "practice"
-var lightOutEvent = false; 
+var lightsOutEvent = false; 
 //// CAPTURE PARICIPANTS DATA PACKET ID 4 ONCE AFTER LIGHTS OUT EVENT()
 
 
@@ -20,9 +20,9 @@ client.on(PACKETS.event, async (d)=>{
     // m_eventStringCode
     // “LGOT”
     d.type = 'event'
-    if(d.m_eventStringCode == "LGOT"){
+    if(d.m_eventStringCode == "LGOT" || d.m_eventStringCode == "SSTA"){
         d.raceEvent_lightsOut = true; 
-        lightOutEvent = true; 
+        lightsOutEvent = true; 
         console.log("lights out event tagged")
     }
 //    saveData(d) 
@@ -51,10 +51,11 @@ client.on(PACKETS.event, async (d)=>{
 client.on(PACKETS.participants, async (d)=>{
     d.gearSession = session; 
     d.type = "participants"
-    if(lightOutEvent==true){
-        d.lightOutEvent = true; 
+    if(lightsOutEvent==true){
+        // d.lightsOutEvent = true; 
         setTimeout(function(){
-            lightOutEvent = false; 
+            lightsOutEvent = false; 
+            console.log("lightsOutEvent changed to false")
         },12000)
         saveData(d); 
         console.log("participants lights out event tagged")

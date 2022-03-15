@@ -25,7 +25,7 @@ client.on(PACKETS.event, async (d)=>{
         lightOutEvent = true; 
         console.log("lights out event tagged")
     }
-   saveData(d) 
+//    saveData(d) 
 //    console.log(d)
 });
 // client.on(PACKETS.motion, async (d)=>{

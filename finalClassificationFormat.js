@@ -40,12 +40,13 @@ async function findData(){
     
     var dateRef  = date; 
     date = new Date(date)
-    date.setUTCHours(20);
-    date.setMinutes(45)
+    date.setUTCHours(00);
+    date.setMinutes(00)
     console.log(date);
 
     date = date.toUTCString()
     date = Date.parse(date)
+    date = date.getTime(); 
     // console.log(dateRef, date);
 // //HERE
     var participants = await Data.findOne({$and: [{"data.type": "participants"}, {"time": {$gte : date}}, {"data.lightsOutEvent": true}]});

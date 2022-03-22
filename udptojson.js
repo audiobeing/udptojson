@@ -16,6 +16,7 @@ var lightsOutEvent = false;
 var seriesName = null; 
 var raceIndex = null; 
 var args = process.argv.slice(2); 
+var repeatMessage = null; 
 
 if(args.length == 0){
     var m = "NO ARGUMENTS PASSED!!!!"; 
@@ -25,14 +26,15 @@ if(args.length == 0){
     console.log(m)
 }else if(args.length !=2){
     var m = "INCORRECT NUMBER OF ARGUMENTS PASSED!!!!"; 
+    
     for(var i=0; i<100; i++){
         m+="-"
     }
-    console.log(args.length, "arguments passed - require 2 - series name and race index: ", args, m )
+    console.log("ERROR: INCORRECT NUMBER OF ARGUMENTS PASSED!!!!",args.length, "arguments passed - require 2 - series name and race index: ", args, m )
 }else{
     seriesName = args[0]; 
     raceIndex = args[1]; 
-    var m = `SERIES NAME ${seriesName} RACE INDEX ${raceIndex}`; 
+    var m = `SERIES NAME: ${seriesName}, RACE INDEX: ${raceIndex} `; 
     for(var i=0; i<100; i++){
         m+="-"
     }

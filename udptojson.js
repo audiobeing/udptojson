@@ -1,3 +1,4 @@
+/// 
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 const JSONSocket = require('udp-json');
@@ -10,8 +11,35 @@ const Data = db.data;
 require("dotenv").config({path:".env"}); 
 connectDb()
 const client = new F1TelemetryClient({ port: 20777 });
-var session = "practice"
+var session = "race"
 var lightsOutEvent = false; 
+var seriesName = null; 
+var raceIndex = null; 
+var args = process.argv.slice(2); 
+
+if(args.length == 0){
+    var m = "NO ARGUMENTS PASSED!!!!"; 
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log(m)
+}else if(args.length !=2){
+    var m = "INCORRECT NUMBER OF ARGUMENTS PASSED!!!!"; 
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log(args.length, "arguments passed - require 2 - series name and race index: ", args, m )
+}else{
+    seriesName = args[0]; 
+    raceIndex = args[1]; 
+    var m = `SERIES NAME ${seriesName} RACE INDEX ${raceIndex}`; 
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log(m)
+}
+
+
 //// CAPTURE PARICIPANTS DATA PACKET ID 4 ONCE AFTER LIGHTS OUT EVENT()
 
 
@@ -51,6 +79,8 @@ client.on(PACKETS.event, async (d)=>{
 client.on(PACKETS.participants, async (d)=>{
     d.gearSession = session; 
     d.type = "participants"
+    d.seriesName = seriesName; 
+    d.raceIndex = raceIndex; 
     if(lightsOutEvent==true){
         d.lightsOutEvent = true; 
         setTimeout(function(){
@@ -75,6 +105,8 @@ client.on(PACKETS.participants, async (d)=>{
 
 client.on(PACKETS.finalClassification, async (d)=>{
     d.gearSession = session; 
+    d.seriesName = seriesName; 
+    d.raceIndex = raceIndex; 
     d.type = "finalClassification"; 
     console.log(d); 
     saveData(d); 

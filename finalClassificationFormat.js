@@ -11,7 +11,7 @@ const Racer = db.racer;
 require("dotenv").config({path:".env"}); 
 connectDb()
 findData(); 
-
+var todaysDate = formatDate(new Date()); 
 async function findData(){
     //// get midnight previous
     var date = new Date(); 
@@ -29,7 +29,7 @@ async function findData(){
     //     console.log(new Date(v.time)); 
     // })
     date = finalClassification[finalClassification.length-1].time; 
-    console.log(new Date(date));
+    console.log("FINAL CLASSIFICATION",new Date(date));
     // console.log(finalClassification[finalClassification.length-1], date); 
     finalClassification = finalClassification[finalClassification.length-1].data.m_classificationData
     // console.log(JSON.stringify(finalClassification, null, 2))
@@ -40,12 +40,12 @@ async function findData(){
     
     var dateRef  = date; 
     date = new Date(date)
-    date.setUTCHours(00);
+    date.setUTCHours(3);
     date.setMinutes(00)
-    console.log(date);
+    console.log("QUERY DATE",date);
 
-    date = date.toUTCString()
-    date = Date.parse(date)
+    // date = date.toUTCString()
+    // date = Date.parse(date)
     date = date.getTime(); 
     // console.log(dateRef, date);
 // //HERE
@@ -54,12 +54,12 @@ async function findData(){
     // storeData(finalClassification, __dirname+"/finalClassificationFormat.json"); 
     console.log("participants", new Date(participants.time))
     participants = participants.data.m_participants
-    participants.forEach((v,i)=>{
-        v.idex = i; 
-        if(v.m_aiControlled == 0){
-            console.log("raceNumbers",v.m_raceNumber)
-        }
-    })
+    // participants.forEach((v,i)=>{
+    //     v.index = i; 
+    //     if(v.m_aiControlled == 0){
+    //         console.log("raceNumbers",v.m_raceNumber)
+    //     }
+    // })
     // console.log(JSON.stringify(participants, null, 2))
     
     var carNumbers = []; /// ordered array 
@@ -82,7 +82,7 @@ async function findData(){
         }
     // })
     // .then(()=>{
-        storeData(finalClassification, __dirname+"/finalClassificationFormat.json"); 
+        storeData(finalClassification, __dirname+"/finalClassificationFormat_"+todaysDate+".json"); 
 
     // })
     
@@ -154,4 +154,22 @@ async function saveData(o){
         
         });
     })
+}
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+function formatDate(date) {
+    return (
+        [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+        ].join('-') +
+        '_' +
+        [
+        padTo2Digits(date.getHours()),
+        padTo2Digits(date.getMinutes()),
+        padTo2Digits(date.getSeconds()),
+        ].join(':')
+    );
 }

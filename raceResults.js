@@ -10,7 +10,7 @@ const Data = db.data;
 const Racer = db.racer; 
 var seriesName = null; 
 var raceIndex = null; 
-// const path = require('path')
+const path = require('path')
 require("dotenv").config({path:".env"}); 
 connectDb()
 findData(); 

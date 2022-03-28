@@ -8,62 +8,53 @@ const mongoose = require('mongoose');
 const db = require("./models"); 
 const Data = db.data;
 const Racer = db.racer; 
+var seriesName = null; 
+var raceIndex = null; 
 require("dotenv").config({path:".env"}); 
 connectDb()
 findData(); 
 var todaysDate = formatDate(new Date()); 
+
+var args = process.argv.slice(2); 
+if(args.length == 0){
+    var m = "NO ARGUMENTS PASSED!!!!"; 
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log(m)
+}else if(args.length !=2){
+    var m = "INCORRECT NUMBER OF ARGUMENTS PASSED!!!!"; 
+    
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log("ERROR: INCORRECT NUMBER OF ARGUMENTS PASSED!!!!",args.length, "arguments passed - require 2 - series name and race index: ", args, m )
+}else{
+    seriesName = args[0]; 
+    raceIndex = args[1]; 
+    var m = `SERIES NAME: ${seriesName}, RACE INDEX: ${raceIndex} `; 
+    for(var i=0; i<100; i++){
+        m+="-"
+    }
+    console.log(m)
+}
+
 async function findData(){
     //// get midnight previous
     var date = new Date(); 
-    // var data = 2022-02-24T20:32:55.469Z
+    var finalClassification = await Data.find({$and: [{"data.type": "finalClassification"}, {"data.seriesName": seriesName}, {"data.raceIndex": raceIndex}]}); //, {"time": {$gte : date}} { "data.gearSession": "race" }, 
+    
+    
+    console.log("FINAL CLASSIFICATION "+new Date(finalClassification.time), finalClassification)
 
-    // var dateRef  = date.getTime(); 
-    // date.setUTCHours(0);
-    // date = date.toUTCString()
-    // date = Date.parse(date)
-    // console.log(dateRef, date); 
-
-    /// get the last race finalClassification
-    var finalClassification = await Data.find({$and: [{"data.type": "finalClassification"}]}); //, {"time": {$gte : date}} { "data.gearSession": "race" }, 
-    // finalClassification.forEach((v)=>{
-    //     console.log(new Date(v.time)); 
-    // })
-    date = finalClassification[finalClassification.length-1].time; 
-    console.log("FINAL CLASSIFICATION",new Date(date));
-    // console.log(finalClassification[finalClassification.length-1], date); 
-    // console.log(finalClassification[finalClassification.length-1])
-    finalClassification = finalClassification[finalClassification.length-1].data.m_classificationData
+    finalClassification = finalClassification[1].data.m_classificationData
     
-    // console.log(JSON.stringify(finalClassification, null, 2))
-    // let ttt = new Date(finalClassification.time)
+    var participants = await Data.find({$and: [{"data.type": "participants"}, {"data.lightsOutEvent": true}, {"data.seriesName": seriesName}, {"data.raceIndex": raceIndex}]});  /// {"time": {$gte : date}},
+    console.log("PARTICIPANTS", participants)
+   
+    participants = participants[1].data.m_participants
     
-    //console.log(finalClassification.time)
-    /// get the first participant data for race
-    
-    var dateRef  = date; 
-    date = new Date(date)
-    date.setUTCHours(3);
-    date.setMinutes(00)
-    console.log("QUERY DATE",date);
-
-    // date = date.toUTCString()
-    // date = Date.parse(date)
-    date = date.getTime(); 
-    // console.log(dateRef, date);
-// //HERE
-    var participants = await Data.findOne({$and: [{"data.type": "participants"}, {"time": {$gte : date}}, {"data.lightsOutEvent": true}]});
-    // console.log(participants.m_header)
-    // storeData(finalClassification, __dirname+"/finalClassificationFormat.json"); 
-    console.log("participants", new Date(participants.time))
-    participants = participants.data.m_participants
-    // participants.forEach((v,i)=>{
-    //     v.index = i; 
-    //     if(v.m_aiControlled == 0){
-    //         console.log("raceNumbers",v.m_raceNumber)
-    //     }
-    // })
-    // console.log(JSON.stringify(participants, null, 2))
-    
+   
     var carNumbers = []; /// ordered array 
     participants.forEach((v,i)=>{
         if(v.m_raceNumber != 0){
@@ -71,10 +62,8 @@ async function findData(){
         }
     })
     console.log("carNumbers",carNumbers)
-    // console.log(carNumbers, carNumbers.length)
     const numberNames = await Racer.find({"number": {$in: carNumbers}})
-    // console.log(numberNames)
-    // numberNames.then((v,i)=>{
+  
         for(var i=0; i<numberNames.length; i++){
             var index = carNumbers.indexOf(numberNames[i].number);
             finalClassification[index].i = i+1; 
@@ -82,24 +71,13 @@ async function findData(){
             finalClassification[index].nickName = numberNames[i].nickName; 
             finalClassification[index].discordId = numberNames[i].discordId; 
         }
-    // })
-    // .then(()=>{
+
         storeData(finalClassification, __dirname+"/finalClassificationFormat_"+todaysDate+".json"); 
 
-    // })
-    
-    
-    // console.log(finalClassification)
-    /// get the racers by f1 carnumber from db
 
     
-    
 
-    // if session it is a race
-    /// if you don't have the participants data get it put in variable
-    /// get the final classification 
     db.mongoose.connection.close()
-    // console.log(JSON.stringify(docs.data.m_participants)); 
 }
 async function connectDb(){
     db.mongoose

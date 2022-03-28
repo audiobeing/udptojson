@@ -87,10 +87,10 @@ client.on(PACKETS.session, async (d)=>{
     // saveData(d); 
     if(d.sessionType == sessionType || d.sessionType == sessionType+1){
         sessionTypeBuffer = true; 
+        console.log(d); 
     }else{
         sessionTypeBuffer = false; 
-    }
-    console.log(d); 
+    }  
 });
 client.on(PACKETS.participants, async (d)=>{
     if(sessionTypeBuffer){

@@ -1,4 +1,9 @@
-/// 
+/// notes: 
+//// check if seriesName and raceIndex already exists
+////// if it does provide option to remove or ???????
+
+
+
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 const JSONSocket = require('udp-json');
@@ -17,6 +22,8 @@ var seriesName = null;
 var raceIndex = null; 
 var args = process.argv.slice(2); 
 var repeatMessage = null; 
+var sessionType = 10; 
+var sessionTypeBuffer = false; 
 
 if(args.length == 0){
     var m = "NO ARGUMENTS PASSED!!!!"; 
@@ -49,11 +56,13 @@ if(args.length == 0){
 client.on(PACKETS.event, async (d)=>{
     // m_eventStringCode
     // “LGOT”
-    d.type = 'event'
-    if(d.m_eventStringCode == "LGOT" || d.m_eventStringCode == "SSTA"){
-        d.raceEvent_lightsOut = true; 
-        lightsOutEvent = true; 
-        console.log("lights out event tagged")
+    if(sessionTypeBuffer){
+        d.type = 'event'
+        if(d.m_eventStringCode == "LGOT" || d.m_eventStringCode == "SSTA"){
+            d.raceEvent_lightsOut = true; 
+            lightsOutEvent = true; 
+            console.log("lights out event tagged")
+        }
     }
 //    saveData(d) 
 //    console.log(d)
@@ -74,25 +83,31 @@ client.on(PACKETS.event, async (d)=>{
 //     saveData(d); 
 //     console.log(d); 
 // });
-// client.on(PACKETS.session, async (d)=>{
-//     saveData(d); 
-//     console.log(d); 
-// });
-client.on(PACKETS.participants, async (d)=>{
-    d.gearSession = session; 
-    d.type = "participants"
-    d.seriesName = seriesName; 
-    d.raceIndex = raceIndex; 
-    if(lightsOutEvent==true){
-        d.lightsOutEvent = true; 
-        setTimeout(function(){
-            lightsOutEvent = false; 
-            console.log("lightsOutEvent changed to false")
-        },12000)
-        saveData(d); 
-        console.log("participants lights out event tagged")
+client.on(PACKETS.session, async (d)=>{
+    // saveData(d); 
+    if(d.sessionType == sessionType || d.sessionType == sessionType+1){
+        sessionTypeBuffer = true; 
+    }else{
+        sessionTypeBuffer = false; 
     }
-   
+    console.log(d); 
+});
+client.on(PACKETS.participants, async (d)=>{
+    if(sessionTypeBuffer){
+        d.gearSession = session; 
+        d.type = "participants"
+        d.seriesName = seriesName; 
+        d.raceIndex = raceIndex; 
+        if(lightsOutEvent==true){
+            d.lightsOutEvent = true; 
+            setTimeout(function(){
+                lightsOutEvent = false; 
+                console.log("lightsOutEvent changed to false")
+            },12000)
+            saveData(d); 
+            console.log("participants lights out event tagged")
+        }
+    }
     // console.log(d); 
 });
 /// 
@@ -106,12 +121,14 @@ client.on(PACKETS.participants, async (d)=>{
 // });
 
 client.on(PACKETS.finalClassification, async (d)=>{
-    d.gearSession = session; 
-    d.seriesName = seriesName; 
-    d.raceIndex = raceIndex; 
-    d.type = "finalClassification"; 
-    console.log(d); 
-    saveData(d); 
+    if(sessionTypeBuffer){
+        d.gearSession = session; 
+        d.seriesName = seriesName; 
+        d.raceIndex = raceIndex; 
+        d.type = "finalClassification"; 
+        console.log(d); 
+        saveData(d); 
+    }
     
 });
 // client.on(PACKETS.lobbyInfo, async (d)=>{

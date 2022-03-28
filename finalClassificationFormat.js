@@ -31,7 +31,9 @@ async function findData(){
     date = finalClassification[finalClassification.length-1].time; 
     console.log("FINAL CLASSIFICATION",new Date(date));
     // console.log(finalClassification[finalClassification.length-1], date); 
+    // console.log(finalClassification[finalClassification.length-1])
     finalClassification = finalClassification[finalClassification.length-1].data.m_classificationData
+    
     // console.log(JSON.stringify(finalClassification, null, 2))
     // let ttt = new Date(finalClassification.time)
     

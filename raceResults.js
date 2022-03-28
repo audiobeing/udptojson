@@ -10,6 +10,7 @@ const Data = db.data;
 const Racer = db.racer; 
 var seriesName = null; 
 var raceIndex = null; 
+// const path = require('path')
 require("dotenv").config({path:".env"}); 
 connectDb()
 findData(); 
@@ -72,7 +73,7 @@ async function findData(){
             finalClassification[index].discordId = numberNames[i].discordId; 
         }
 
-        storeData(finalClassification, __dirname+"/finalClassificationFormat_"+todaysDate+".json"); 
+        storeData(finalClassification, __dirname+"/raceResults_"+todaysDate+".json"); 
 
 
     
